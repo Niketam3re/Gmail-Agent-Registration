@@ -1,0 +1,20 @@
+{
+  "name": "gmail-watch-renewal-function",
+  "version": "1.0.0",
+  "description": "Cloud Function for renewing Gmail watches",
+  "main": "watch-renewal.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@google-cloud/firestore": "^7.1.0",
+    "@google-cloud/pubsub": "^4.1.0",
+    "google-auth-library": "^9.2.0",
+    "googleapis": "^128.0.0",
+    "axios": "^1.6.0",
+    "crypto-js": "^4.2.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Success - Gmail Agent</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="success-container">
+            <div class="success-icon">
+                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="40" cy="40" r="38" stroke="#34A853" stroke-width="4"/>
+                    <path d="M25 40L35 50L55 30" stroke="#34A853" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+
+            <h1>Registration Successful!</h1>
+            <p class="success-message">Your Gmail account has been successfully connected.</p>
+
+            <div class="success-details">
+                <h2>What happens next?</h2>
+                <ul class="next-steps">
+                    <li>
+                        <strong>Your account is now active</strong>
+                        <span>We've securely stored your credentials and set up email monitoring</span>
+                    </li>
+                    <li>
+                        <strong>Automated processing enabled</strong>
+                        <span>Our system will now monitor your inbox for new messages</span>
+                    </li>
+                    <li>
+                        <strong>Notification system active</strong>
+                        <span>You'll receive updates about important email activities</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>Your Registration Details</h3>
+                <div id="userDetails">
+                    <p><strong>Gmail:</strong> <span id="gmailAddress">Loading...</span></p>
+                    <p><strong>Registered:</strong> <span id="registeredAt">Loading...</span></p>
+                    <p><strong>Watch Status:</strong> <span id="watchStatus" class="status-active">Active</span></p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button onclick="window.close()" class="button-secondary">Close Window</button>
+                <a href="/" class="button-primary">Register Another Account</a>
+            </div>
+
+            <div class="security-notice">
+                <p><strong>Security:</strong> You can revoke access anytime from your <a href="https://myaccount.google.com/permissions" target="_blank">Google Account settings</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Parse URL parameters to display registration details
+        const urlParams = new URLSearchParams(window.location.search);
+        const gmail = urlParams.get('gmail');
+        const timestamp = urlParams.get('timestamp');
+
+        if (gmail) {
+            document.getElementById('gmailAddress').textContent = gmail;
+        }
+
+        if (timestamp) {
+            const date = new Date(parseInt(timestamp));
+            document.getElementById('registeredAt').textContent = date.toLocaleString();
+        } else {
+            document.getElementById('registeredAt').textContent = new Date().toLocaleString();
+        }
+
+        // Clear session storage
+        sessionStorage.removeItem('registrationData');
+    </script>
+</body>
+</html>
