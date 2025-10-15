@@ -1,7 +1,7 @@
 const { google } = require('googleapis');
 const { PubSub } = require('@google-cloud/pubsub');
+const { OAuth2Client } = require('google-auth-library');
 const { getClientById, updateWatchData } = require('./database');
-const { getOAuth2Client } = require('./auth');
 
 const pubsub = new PubSub({
     projectId: process.env.FIRESTORE_PROJECT_ID,
@@ -42,8 +42,12 @@ async function setupGmailWatch(clientId) {
             throw new Error('Client not found');
         }
 
-        // Set up OAuth client with tokens
-        const oauth2Client = getOAuth2Client();
+        // Initialize OAuth client and set credentials (avoids circular import with auth.js)
+        const oauth2Client = new OAuth2Client(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            process.env.GOOGLE_REDIRECT_URI
+        );
         oauth2Client.setCredentials(client.tokens);
 
         // Initialize Gmail API
@@ -101,8 +105,12 @@ async function renewGmailWatch(clientId) {
             throw new Error('Client not found');
         }
 
-        // Set up OAuth client with tokens
-        const oauth2Client = getOAuth2Client();
+        // Initialize OAuth client and set credentials (avoids circular import with auth.js)
+        const oauth2Client = new OAuth2Client(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            process.env.GOOGLE_REDIRECT_URI
+        );
         oauth2Client.setCredentials(client.tokens);
 
         // Initialize Gmail API
@@ -165,8 +173,12 @@ async function stopGmailWatch(clientId) {
             throw new Error('Client not found');
         }
 
-        // Set up OAuth client with tokens
-        const oauth2Client = getOAuth2Client();
+        // Initialize OAuth client and set credentials (avoids circular import with auth.js)
+        const oauth2Client = new OAuth2Client(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            process.env.GOOGLE_REDIRECT_URI
+        );
         oauth2Client.setCredentials(client.tokens);
 
         // Initialize Gmail API
@@ -202,7 +214,11 @@ async function getMessageHistory(clientId, historyId) {
             throw new Error('Client not found');
         }
 
-        const oauth2Client = getOAuth2Client();
+        const oauth2Client = new OAuth2Client(
+            process.env.GOOGLE_CLIENT_ID,
+            process.env.GOOGLE_CLIENT_SECRET,
+            process.env.GOOGLE_REDIRECT_URI
+        );
         oauth2Client.setCredentials(client.tokens);
 
         const gmail = google.gmail({ version: 'v1', auth: oauth2Client });
